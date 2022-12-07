@@ -7,6 +7,7 @@ import os
 import re
 import subprocess
 import uuid
+from dotenv import load_dotenv
 
 ARG_TYPES = {
   'integer': int,
@@ -59,6 +60,8 @@ class PipelineCaller:
         self.nf_runner_config = "/opt/nf-runner/nf-runner.config"
         self.nf_command = None
         self.uuid = pipeline_name + "_" + uuid.uuid4().hex
+
+    load_dotenv()
 
     def _set_ea_dc_data_src(self):
         self.ea_dc_data_src = os.getenv('EA_DC_DATA_SRC')
@@ -161,10 +164,10 @@ class PipelineCaller:
 
     def run(self):
         # build the command string
-        #self._set_ea_dc_data_src()
+        self._set_ea_dc_data_src()
         #self._set_nextflow_log()
         #self._set_syslog()
-        #self._set_nxf_work()
+        self._set_nxf_work()
         #self._set_ea_dc_references()
         self._build_nf_command()
         print(self.nf_command)
